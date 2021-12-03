@@ -1,10 +1,22 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:chatapp/home_screen.dart';
+import 'package:chatapp/login_screen.dart';
+import 'package:chatapp/providers/auth_provider.dart';
+import 'package:chatapp/register_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(ChangeNotifierProvider(
+      create: (context) {
+        return AuthProvider();
+      },
+      child: MyApp())
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -12,10 +24,21 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: Colors.transparent,
+        appBarTheme: AppBarTheme(
+          color: Colors.transparent,
+          elevation: 0,
+          centerTitle: true,
+        ),
+      ),
       routes: {
         HomeScreen.ROUTE_NAME: (context) => HomeScreen(),
+        RegisterScreen.ROUTE_NAME: (context) => RegisterScreen(),
+        LoginScreen.ROUTE_NAME: (context) => LoginScreen(),
       },
-      initialRoute: HomeScreen.ROUTE_NAME,
+      initialRoute: LoginScreen.ROUTE_NAME,
     );
   }
 }
