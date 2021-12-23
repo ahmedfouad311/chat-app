@@ -3,11 +3,12 @@
 import 'package:chatapp/data/firestore_utils.dart';
 import 'package:chatapp/data/user.dart';
 import 'package:chatapp/general/utils.dart';
-import 'package:chatapp/home_screen.dart';
 import 'package:chatapp/providers/auth_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../home/home_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const String ROUTE_NAME = 'Register Screen';

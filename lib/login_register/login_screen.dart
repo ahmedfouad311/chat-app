@@ -1,14 +1,14 @@
 // ignore_for_file: use_key_in_widget_constructors, constant_identifier_names, override_on_non_overriding_member, prefer_const_constructors, non_constant_identifier_names, prefer_const_literals_to_create_immutables
 
 import 'package:chatapp/data/firestore_utils.dart';
-import 'package:chatapp/home_screen.dart';
 import 'package:chatapp/providers/auth_provider.dart';
-import 'package:chatapp/register_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'general/utils.dart';
+import '../general/utils.dart';
+import '../home/home_screen.dart';
+import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String ROUTE_NAME = 'Login Screen';
