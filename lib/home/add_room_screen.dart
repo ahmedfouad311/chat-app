@@ -1,5 +1,7 @@
-// ignore_for_file: use_key_in_widget_constructors, constant_identifier_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable, avoid_unnecessary_containers
+// ignore_for_file: use_key_in_widget_constructors, constant_identifier_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable, avoid_unnecessary_containers, unused_local_variable, unused_catch_clause
 
+import 'package:chatapp/data/firestore_utils.dart';
+import 'package:chatapp/data/rooms.dart';
 import 'package:chatapp/general/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +14,7 @@ class AddRoomScreen extends StatefulWidget {
 
 class _AddRoomScreenState extends State<AddRoomScreen> {
   Category selectedCategory = categories[0];
+  var ids = [Category.SPORTS_ID, Category.MOVIES_ID, Category.MUSIC_ID];
 
   String roomName = '';
 
@@ -83,7 +86,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
                       ),
                       TextFormField(
                         onChanged: (text) {
-                          text = roomName;
+                          roomName = text;
                         },
                         validator: (text) {
                           if (text == null || text.trim().isEmpty) {
@@ -137,7 +140,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
                         maxLines: 3,
                         minLines: 3,
                         onChanged: (text) {
-                          text = description;
+                          description = text;
                         },
                         decoration: InputDecoration(
                             hintText: 'Enter Room Description',
@@ -158,7 +161,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
                             backgroundColor: MaterialStateProperty.all(
                                 Color.fromARGB(255, 53, 152, 219))),
                         onPressed: () {
-                          if (formKey.currentState?.validate() == true) {}
+                          createRoom();
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
@@ -178,5 +181,24 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
             ),
           )),
     );
+  }
+
+  void createRoom() async {
+    if (formKey.currentState!.validate()) {
+      try {
+        showLoading(context);
+        var fireStoreRooms = Rooms(
+            roomId: '',
+            roomName: roomName,
+            description: description,
+            categoryId: selectedCategory.id);
+        var result = await addRoomToFireStore(fireStoreRooms);
+        hideLoading(context);
+        Navigator.pop(context);
+        showMessage('Room has been Added Successfully', context);
+      } on Exception catch (e) {
+        showMessage('Error while adding the Room ', context);
+      }
+    }
   }
 }

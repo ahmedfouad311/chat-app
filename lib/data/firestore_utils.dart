@@ -1,3 +1,4 @@
+import 'package:chatapp/data/rooms.dart';
 import 'package:chatapp/data/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -11,4 +12,8 @@ Future<FireStoreUser?> getUserByID(String userId) async {
   DocumentSnapshot<FireStoreUser> result =
       await FireStoreUser.withConverter().doc(userId).get();
   return result.data();
+}
+
+Future<void> addRoomToFireStore(Rooms rooms) {
+  return Rooms.withConverter().add(rooms);
 }

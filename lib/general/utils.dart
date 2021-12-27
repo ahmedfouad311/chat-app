@@ -62,19 +62,17 @@ class Category {
 
   Category(this.id, this.name, this.imagePath);
 
-  Category.fromId(String id){
+  Category.fromId(String id) {
     if (id == MUSIC_ID) {
-      id = MUSIC_ID;
+      this.id = MUSIC_ID;
       name = 'Music';
       imagePath = 'assets/images/music.jpg';
-    }
-    else if (id == SPORTS_ID) {
-      id = SPORTS_ID;
+    } else if (id == SPORTS_ID) {
+      this.id = SPORTS_ID;
       name = 'Sports';
       imagePath = 'assets/images/sports.png';
-    }
-    else if (id == MOVIES_ID) {
-      id = MOVIES_ID;
+    } else if (id == MOVIES_ID) {
+      this.id = MOVIES_ID;
       name = 'Movies';
       imagePath = 'assets/images/movie.png';
     }
