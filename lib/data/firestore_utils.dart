@@ -1,3 +1,4 @@
+import 'package:chatapp/data/messages.dart';
 import 'package:chatapp/data/rooms.dart';
 import 'package:chatapp/data/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,5 +16,15 @@ Future<FireStoreUser?> getUserByID(String userId) async {
 }
 
 Future<void> addRoomToFireStore(Rooms rooms) {
-  return Rooms.withConverter().add(rooms);
+  var docRef = Rooms.withConverter().doc();
+
+  rooms.roomId = docRef.id;
+  return docRef.set(rooms);
+}
+
+Future<void> addMessagesToEachRoom(Message message, String roomId) {
+  var docRef = Message.withConverter(roomId).doc();
+
+  message.messageId = docRef.id;
+  return docRef.set(message);
 }
