@@ -1,5 +1,6 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:chatapp/chat/chat_details_screen.dart';
 import 'package:chatapp/home/add_room_screen.dart';
 import 'package:chatapp/providers/auth_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,8 +18,7 @@ void main() async {
       create: (context) {
         return AuthProvider();
       },
-      child: MyApp())
-  );
+      child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -41,10 +41,11 @@ class MyApp extends StatelessWidget {
         RegisterScreen.ROUTE_NAME: (context) => RegisterScreen(),
         LoginScreen.ROUTE_NAME: (context) => LoginScreen(),
         AddRoomScreen.ROUTE_NAME: (context) => AddRoomScreen(),
+        ChatDetailsScreen.ROUTE_NAME: (context) => ChatDetailsScreen(),
       },
-      initialRoute: provider.isLoggedIn() ? HomeScreen.ROUTE_NAME : LoginScreen
-          .ROUTE_NAME,
+      initialRoute: provider.isLoggedIn()
+          ? HomeScreen.ROUTE_NAME
+          : LoginScreen.ROUTE_NAME,
     );
   }
 }
-

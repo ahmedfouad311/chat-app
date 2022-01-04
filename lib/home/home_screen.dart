@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, constant_identifier_names, prefer_const_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, unused_local_variable
+// ignore_for_file: use_key_in_widget_constructors, constant_identifier_names, prefer_const_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, unused_local_variable, must_be_immutable
 
 import 'package:chatapp/data/rooms.dart';
 import 'package:chatapp/home/add_room_screen.dart';
@@ -101,42 +101,39 @@ class HomeScreen extends StatelessWidget {
             padding: const EdgeInsets.only(
                 top: 120, bottom: 12, left: 12, right: 12),
             child: StreamBuilder<QuerySnapshot<Rooms>>(
-                    stream: Rooms.withConverter().snapshots(),
-                    builder: (builder, snapshot) {
-                      if (snapshot.hasError) {
-                        return Center(
-                            child: Text(snapshot.hasError.toString()));
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
-                      }
-                      else if(snapshot.data!.docs.isEmpty){
-                        return Center(
-                          child: Text(
-                            'No Rooms Joined Yet',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )
-                        );
-                      }
-                      roomsList =
-                          snapshot.data?.docs.map((doc) => doc.data()).toList();
-                      return GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            mainAxisSpacing: 15,
-                            crossAxisSpacing: 15,
-                            childAspectRatio: 0.9 / 1),
-                        itemBuilder: (context, index) {
-                          return RoomGridItem(roomsList!.elementAt(index));
-                        },
-                        itemCount: roomsList?.length ?? 0,
-                      );
-                    },
-                  ),
+              stream: Rooms.withConverter().snapshots(),
+              builder: (builder, snapshot) {
+                if (snapshot.hasError) {
+                  return Center(child: Text(snapshot.hasError.toString()));
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.data!.docs.isEmpty) {
+                  return Center(
+                      child: Text(
+                    'No Rooms Joined Yet',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ));
+                }
+                roomsList =
+                    snapshot.data?.docs.map((doc) => doc.data()).toList();
+                return GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      mainAxisSpacing: 15,
+                      crossAxisSpacing: 15,
+                      childAspectRatio: 0.9 / 1),
+                  itemBuilder: (context, index) {
+                    return RoomGridItem(roomsList!.elementAt(index));
+                  },
+                  itemCount: roomsList?.length ?? 0,
+                );
+              },
+            ),
           ),
         ),
       ),
